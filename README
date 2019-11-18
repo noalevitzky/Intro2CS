@@ -1,0 +1,31 @@
+noa.levitzky
+205970783
+noa levitzky
+
+internet pages:
+https://stackoverflow.com/questions/39808908/
+detect-if-item-is-the-last-in-a-list
+https://stackoverflow.com/questions/1835018/
+how-to-check-if-an-object-is-a-list-or-tuple-but-not-string
+
+ex description: 
+learn how to use while and for loops, as well as assert statement and testings.
+
+notes:
+* section D- checking maximum function: 
+i chose those cases since they are edge cases, where the weak spots
+of a bad code might me. the edge cases i chose are:
+- the list is empty
+- all nums are equal and max
+- nums of different types (int and float)
+- 2 num are equal and max
+
+* secrtion E- theoretical questions:
+1. cyclic(123 ,321)- returns an asserterror, since lst1 is not of type list.
+2. maximum([-3, -2, -1])- returns an asserterror, since number is negative.
+3. maximum([1, 10, 100, ‘intro’])- returns a syntaxerror, of invalid char in identifier (’).
+4. histogram(3, [1,2,3,4])- returns assertionerror, since num is not smaller than n.
+5. prime_factors(0)- returns an assertionerror since n is not equal or larger than 1.
+6. pairs([0,0,1,1,2,2], 2)- returns the list [[0, 2], [0, 2], [0, 2], [0, 2]],
+since there is no limitation to return the same pair several times, as long as
+it matches the other requierments.
