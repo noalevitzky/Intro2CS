@@ -5,6 +5,18 @@ from time import sleep
 
 
 class Gui:
+    """
+    The Gui class manages manages the Four_in_a_row game.
+    The game’s board is represented by a grid of buttons and a cell dictionary.
+    Players could either be Human or PC. The user could select one of the
+    following game options: 'Human vs. Human', 'Human vs. PC', 'PC vs. Human'
+    or  'PC vs. PC'.
+    On each turn, the player’s selected column is validated, then lower
+    available cell is colored with player’s representing color. The game is
+    over when a player reached 4 disks in a row/ column/ diagonal, and the
+    winning set is colored in yellow.
+    """
+
     PLAYERS_OPTION = ['Human vs. Human', 'Human vs. PC', 'PC vs. Human',
                       'PC vs. PC']
     CHOSEN_OPTION = None
@@ -21,8 +33,19 @@ class Gui:
     def __init__(self, root):
         self.root = root
         root.title('Four In A Row')
+        self.frame = null
+        self.title_label = null
 
-        # create objects
+        # add menu elements
+        self.__add_objects()
+
+        # variables of main gui
+        self.__init_variables()
+
+    def __add_objects(self):
+        """
+        add menu elements to screen
+        """
         self.frame = tk.Frame(self.root, bg='lemon chiffon')
         self.title_label = tk.Label(self.frame, width=25, height=2,
                                     bg='lemon chiffon',
@@ -56,9 +79,6 @@ class Gui:
         pc_vs_pc_b.pack()
         space.pack()
 
-        # variables of main gui (will be defined later on)
-        self.__init_variables()
-
     def __init_variables(self):
         self.game = Gm()
         self.msg_label = None
@@ -69,6 +89,9 @@ class Gui:
         self.game_on = True
 
     def __set_chosen_option(self, option):
+        """
+        navigate to game based on user's chosen option
+        """
         if option == self.PLAYERS_OPTION[1]:
             self.operating_ais.append(AI(self.game, 2))
         elif option == self.PLAYERS_OPTION[2]:
@@ -76,6 +99,8 @@ class Gui:
         elif option == self.PLAYERS_OPTION[3]:
             self.operating_ais.append(AI(self.game, 1))
             self.operating_ais.append(AI(self.game, 2))
+
+        # navigate to game
         self.__start_game(option)
 
     def __start_game(self, option):
@@ -139,13 +164,15 @@ class Gui:
         self.__activate_cells()
 
     def __next_player(self):
+        """
+        update current player in game and turn label
+        """
         self.game.set_player()
         self.__update_turn_label()
 
     def __on_click(self, column):
         """
-        human turn- a cell was chosen.
-        make move with chosen column
+        human turn- a cell was chosen. make move with chosen column
         """
         self.__reset_error_msg()
         self.__make_move_gui(column)
@@ -169,6 +196,7 @@ class Gui:
             self.__set_disk(self.game.get_cur_placement())
             self.__game_over()
         except IndexError:
+            # an illegal cell was chosen
             self.__illegal_move()
 
     def __ai_turn(self, i=0):
@@ -191,7 +219,8 @@ class Gui:
             # moves, meaning the game is over
             self.__game_over()
         except IndexError:
-            return  # the operating ai in index i dont exist
+            # the operating ai in index i do not exist
+            return
         except NameError:
             # pass if this is not this ai player turn,
             # continue to second ai player (if exists)
@@ -333,6 +362,9 @@ class Gui:
             cell['state'] = tk.DISABLED
 
     def __ask_player_new_game(self):
+        """
+        set screen to a new game request
+        """
         self.new_game_label = tk.Label(self.frame,
                                        text=self.MSG_DICT['new game'],
                                        bg='lemon chiffon',
